@@ -25,11 +25,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
-          node-version: 20 # Note: Node 20 is the current LTS; 24 is not yet released/stable.
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
-        run: npm ci --loglevel verbose
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -39,19 +39,12 @@ jobs:
         with:
           path: ./dist
 
-      # This will save the logs from /home/runner/.npm/_logs if the build fails
-      - name: Upload npm logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: npm-debug-logs
-          path: ~/.npm/_logs/*.log
-
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
-    runs-on: ubuntu-latest
-    needs: build
+
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
