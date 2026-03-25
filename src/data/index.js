@@ -6,12 +6,15 @@ export async function getAllQuestions() {
             const mod = await loader()
             const data = mod.default
 
-            const category = filePath.replace('./', '').split('/')[0]
+            const parts = filePath.replace('./', '').split('/')
+            const category = parts[0] ?? 'Uncategorized'
+            const subcategory = parts[1] ?? 'General'
 
             if (Array.isArray(data)) {
                 return data.map((item, index) => ({
                     id: item.id ?? `${filePath}-${index}`,
                     category: item.category ?? category,
+                    subcategory: item.subcategory ?? subcategory,
                     title: item.title ?? 'Untitled',
                     answer: item.answer ?? '',
                     tags: item.tags ?? [],
@@ -22,6 +25,7 @@ export async function getAllQuestions() {
                 {
                     id: data.id ?? filePath,
                     category: data.category ?? category,
+                    subcategory: data.subcategory ?? subcategory,
                     title: data.title ?? 'Untitled',
                     answer: data.answer ?? '',
                     tags: data.tags ?? [],

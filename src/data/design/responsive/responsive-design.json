@@ -3,5 +3,6 @@
   "title": "Responsive Design",
   "tags": ["tag1", "tag2"],
   "answer": "Answer with ```code blocks```",
-  "category": "Category name"
+  "category": "Category name",
+  "subcategory": "Responsiveness"
 }

@@ -1,0 +1,7 @@
+{
+  "title": "What is git init?",
+  "tags": ["git", "basics"],
+  "answer": "git init creates a new Git repository.",
+  "category": "Development",
+  "subcategory": "Git"
+}
