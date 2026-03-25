@@ -8,7 +8,8 @@
   "title": "Question title",
   "tags": ["tag1", "tag2"],
   "answer": "Answer with ```code blocks```",
-  "category": "Category name"
+  "category": "Category name",
+  "subcategory": "Category name"
 }
 ```
 
