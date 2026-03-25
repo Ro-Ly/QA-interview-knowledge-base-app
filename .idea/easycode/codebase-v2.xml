@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/public/index.html;C:/IdeaProjects/QA-interview-knowledge-base-app/src/components/CategoryAccordion.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/src/components/QuestionCard.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/src/components/SearchBar.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/src/components/TagFilter.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/src/data/design/css-tricks.json;C:/IdeaProjects/QA-interview-knowledge-base-app/src/data/design/responsive-design.json;C:/IdeaProjects/QA-interview-knowledge-base-app/src/data/development/git-basics.json;C:/IdeaProjects/QA-interview-knowledge-base-app/src/data/development/npm-tips.json;C:/IdeaProjects/QA-interview-knowledge-base-app/src/App.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/src/main.jsx;C:/IdeaProjects/QA-interview-knowledge-base-app/package-lock.json;C:/IdeaProjects/QA-interview-knowledge-base-app/package.json;C:/IdeaProjects/QA-interview-knowledge-base-app/vite.config.js" />
+  </component>
+</project>
