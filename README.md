@@ -1,5 +1,7 @@
 ## Adding New Content
 
+https://ro-ly.github.io/QA-Knowledge-DB/
+
 1. Create a new folder in `src/data/` for your category
 2. Add JSON files with this structure:
 ```json
