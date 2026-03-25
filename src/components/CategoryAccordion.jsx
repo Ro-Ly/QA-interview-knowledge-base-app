@@ -3,8 +3,7 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-    Typography,
-    Box
+    Typography
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import QuestionCard from './QuestionCard';
@@ -24,15 +23,17 @@ const CategoryAccordion = ({ category, subcategories }) => {
 
             <AccordionDetails>
                 {Object.entries(subcategories).map(([subcategory, questions]) => (
-                    <Box key={subcategory} sx={{ mb: 3 }}>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
-                            {subcategory}
-                        </Typography>
+                    <Accordion key={subcategory} sx={{ mb: 2, boxShadow: 0 }}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography variant="h6">{subcategory}</Typography>
+                        </AccordionSummary>
 
-                        {questions.map((question) => (
-                            <QuestionCard key={question.id} question={question} />
-                        ))}
-                    </Box>
+                        <AccordionDetails>
+                            {questions.map((question) => (
+                                <QuestionCard key={question.id} question={question} />
+                            ))}
+                        </AccordionDetails>
+                    </Accordion>
                 ))}
             </AccordionDetails>
         </Accordion>
