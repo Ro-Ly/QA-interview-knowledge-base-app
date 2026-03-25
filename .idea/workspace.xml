@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="108a6ce3-1dc6-4371-9f6f-b15eeb63039e" name="Changes" comment="Styles are added">
-      <change afterPath="$PROJECT_DIR$/src/data/all-questions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/index.js" afterDir="false" />
+    <list default="true" id="108a6ce3-1dc6-4371-9f6f-b15eeb63039e" name="Changes" comment="Flat Base items DB is added">
+      <change beforePath="$PROJECT_DIR$/src/data/all-questions.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/all-questions.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +91,7 @@
       <workItem from="1774453411780" duration="282000" />
       <workItem from="1774453707335" duration="2586000" />
       <workItem from="1774457084340" duration="1557000" />
-      <workItem from="1774462043878" duration="8142000" />
+      <workItem from="1774462043878" duration="8779000" />
     </task>
     <task id="LOCAL-00001" summary="Initial main setup">
       <option name="closed" value="true" />
@@ -239,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774470094528</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Flat Base items DB is added">
+      <option name="closed" value="true" />
+      <created>1774471438751</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1774471438751</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +269,8 @@
     <MESSAGE value="Build fixes" />
     <MESSAGE value="Questions are collapsable now" />
     <MESSAGE value="Styles are added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Styles are added" />
+    <MESSAGE value="Flat Base items DB is added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Flat Base items DB is added" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
