@@ -12,26 +12,36 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const QuestionCard = ({ question }) => {
     return (
-        <Accordion sx={{ mb: 1 }}>
+        <Accordion
+            sx={{
+                backgroundColor: 'rgba(255,255,255,0.02)',
+                border: '1px solid rgba(255,255,255,0.05)',
+                boxShadow: 'none',
+            }}
+        >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                     {question.title}
                 </Typography>
             </AccordionSummary>
 
             <AccordionDetails>
                 {!!question.tags?.length && (
-                    <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
+                    <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 2 }}>
                         {question.tags.map((tag) => (
                             <Chip key={tag} label={tag} size="small" />
                         ))}
                     </Stack>
                 )}
 
-                <Box>
-                    <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-                        {question.answer}
-                    </Typography>
+                <Box
+                    sx={{
+                        color: 'text.secondary',
+                        lineHeight: 1.8,
+                        whiteSpace: 'pre-wrap',
+                    }}
+                >
+                    {question.answer}
                 </Box>
             </AccordionDetails>
         </Accordion>
