@@ -7,32 +7,47 @@ export async function getAllQuestions() {
             const data = mod.default
 
             const parts = filePath.replace('./', '').split('/')
-            const category = parts[0] ?? 'Uncategorized'
-            const subcategory = parts[1] ?? 'General'
+            const categoryFromPath = parts[0] ?? 'Uncategorized'
+            const subcategoryFromPath =
+                parts.length > 2 ? parts[1] : 'General'
 
             if (Array.isArray(data)) {
                 return data.map((item, index) => ({
                     id: item.id ?? `${filePath}-${index}`,
-                    category: item.category ?? category,
-                    subcategory: item.subcategory ?? subcategory,
                     title: item.title ?? 'Untitled',
                     answer: item.answer ?? '',
-                    tags: item.tags ?? [],
+                    tags: Array.isArray(item.tags) ? item.tags : [],
+                    category: item.category ?? categoryFromPath,
+                    subcategory: item.subcategory ?? subcategoryFromPath,
                 }))
             }
 
             return [
                 {
                     id: data.id ?? filePath,
-                    category: data.category ?? category,
-                    subcategory: data.subcategory ?? subcategory,
                     title: data.title ?? 'Untitled',
                     answer: data.answer ?? '',
-                    tags: data.tags ?? [],
+                    tags: Array.isArray(data.tags) ? data.tags : [],
+                    category: data.category ?? categoryFromPath,
+                    subcategory: data.subcategory ?? subcategoryFromPath,
                 },
             ]
         })
     )
 
-    return loaded.flat()
+    const flat = loaded.flat()
+
+    const unique = flat.filter((item, index, arr) => {
+        return (
+            index ===
+            arr.findIndex(
+                (q) =>
+                    q.title === item.title &&
+                    q.category === item.category &&
+                    q.subcategory === item.subcategory
+            )
+        )
+    })
+
+    return unique
 }

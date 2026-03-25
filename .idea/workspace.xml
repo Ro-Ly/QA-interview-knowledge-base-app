@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="108a6ce3-1dc6-4371-9f6f-b15eeb63039e" name="Changes" comment="Questions are collapsable now" />
+    <list default="true" id="108a6ce3-1dc6-4371-9f6f-b15eeb63039e" name="Changes" comment="Styles are added">
+      <change afterPath="$PROJECT_DIR$/src/data/all-questions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +93,7 @@
       <workItem from="1774453411780" duration="282000" />
       <workItem from="1774453707335" duration="2586000" />
       <workItem from="1774457084340" duration="1557000" />
-      <workItem from="1774462043878" duration="6850000" />
+      <workItem from="1774462043878" duration="8142000" />
     </task>
     <task id="LOCAL-00001" summary="Initial main setup">
       <option name="closed" value="true" />
@@ -227,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774469210538</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Styles are added">
+      <option name="closed" value="true" />
+      <created>1774470094528</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1774470094528</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +262,8 @@
     <MESSAGE value="Title update" />
     <MESSAGE value="Build fixes" />
     <MESSAGE value="Questions are collapsable now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Questions are collapsable now" />
+    <MESSAGE value="Styles are added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Styles are added" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

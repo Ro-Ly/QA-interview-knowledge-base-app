@@ -1,0 +1,16 @@
+[
+  {
+    "title": "What is git init?  All data Test 1",
+    "tags": ["git", "basics"],
+    "answer": "git init creates a new Git repository.",
+    "category": "Development",
+    "subcategory": "Git"
+  },
+  {
+    "title": "What is git branch? All data Test 2",
+    "tags": ["git", "branches"],
+    "answer": "git branch is used to list, create, or delete branches.",
+    "category": "Development",
+    "subcategory": "Git"
+  }
+]
