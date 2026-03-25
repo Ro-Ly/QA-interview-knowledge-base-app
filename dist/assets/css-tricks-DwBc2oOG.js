@@ -1,0 +1,1 @@
+var e=1,t=`CSS Tricks`,n=[`tag1`,`tag2`],r="Answer with ```code blocks```",i=`Category name`,a=`CSS`,o={id:1,title:t,tags:n,answer:r,category:i,subcategory:`CSS`};export{r as answer,i as category,o as default,e as id,a as subcategory,n as tags,t as title};

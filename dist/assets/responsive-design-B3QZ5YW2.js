@@ -1,0 +1,1 @@
+var e=2,t=`Responsive Design`,n=[`tag1`,`tag2`],r="Answer with ```code blocks```",i=`Category name`,a=`Responsiveness`,o={id:2,title:t,tags:n,answer:r,category:i,subcategory:a};export{r as answer,i as category,o as default,e as id,a as subcategory,n as tags,t as title};

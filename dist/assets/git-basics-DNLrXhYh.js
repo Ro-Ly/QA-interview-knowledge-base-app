@@ -1,1 +1,0 @@
-var e=1,t=`Git Basics`,n=[`tag1`,`tag2`],r="Answer with ```code blocks```",i=`Category name`,a={id:1,title:t,tags:n,answer:r,category:i};export{r as answer,i as category,a as default,e as id,n as tags,t as title};

@@ -1,0 +1,1 @@
+var e=`What is git init?`,t=[`git`,`basics`],n=`git init creates a new Git repository.`,r=`Development`,i=`Git`,a={title:e,tags:t,answer:n,category:r,subcategory:`Git`};export{n as answer,r as category,a as default,i as subcategory,t as tags,e as title};
