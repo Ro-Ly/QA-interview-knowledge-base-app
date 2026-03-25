@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo, Suspense } from 'react';
+import React, { useState, useMemo, memo } from 'react';
 import {
     Accordion,
     AccordionSummary,
@@ -6,20 +6,13 @@ import {
     Typography,
     Chip,
     Stack,
-    Box,
-    CircularProgress
+    Box
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-// 🔥 Lazy load heavy stuff
-const ReactMarkdown = React.lazy(() => import('react-markdown'));
-const remarkGfm = React.lazy(() => import('remark-gfm'));
-const SyntaxHighlighter = React.lazy(() =>
-    import('react-syntax-highlighter').then((mod) => ({
-        default: mod.Prism,
-    }))
-);
-const oneDark = require('react-syntax-highlighter/dist/esm/styles/prism').oneDark;
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function detectCodeLanguage(category, code) {
     const c = (category || '').toLowerCase();
@@ -50,6 +43,7 @@ function detectCodeLanguage(category, code) {
 
 function looksLikeCodeLine(line = '') {
     const trimmed = line.trim();
+
     if (!trimmed) return false;
 
     return (
@@ -84,7 +78,9 @@ function looksLikeCodeLine(line = '') {
 function normalizeAnswerToMarkdown(answer = '', category = '') {
     if (!answer) return '';
 
-    if (answer.includes('```')) return answer;
+    if (answer.includes('```')) {
+        return answer;
+    }
 
     const markerMatch = answer.match(/([\s\S]*?)(\n(?:Код|Пример):\n)([\s\S]*)/i);
 
@@ -128,11 +124,13 @@ function normalizeAnswerToMarkdown(answer = '', category = '') {
 const QuestionCard = ({ question }) => {
     const [expanded, setExpanded] = useState(false);
 
-    // 🔥 Compute markdown ONLY when opened
     const markdown = useMemo(() => {
-        if (!expanded) return '';
-        return normalizeAnswerToMarkdown(question.answer, question.category);
-    }, [expanded, question.answer, question.category]);
+        if (!expanded) {
+            return '';
+        }
+
+        return question.normalizedAnswer || normalizeAnswerToMarkdown(question.answer, question.category);
+    }, [expanded, question.answer, question.category, question.normalizedAnswer]);
 
     return (
         <Accordion
@@ -145,89 +143,170 @@ const QuestionCard = ({ question }) => {
                 boxShadow: 'none',
                 borderRadius: '10px !important',
                 overflow: 'hidden',
-                transition: 'all 0.18s ease',
+                transition: 'transform 0.18s ease, border-color 0.18s ease, background 0.18s ease',
                 '&:hover': {
                     transform: 'translateY(-1px)',
                     borderColor: 'rgba(139,92,246,0.24)',
+                    background:
+                        'linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.022))',
                 },
             }}
         >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                    }}
+                >
                     {question.title}
                 </Typography>
             </AccordionSummary>
 
             <AccordionDetails>
                 {!!question.tags?.length && (
-                    <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                    <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 2 }}>
                         {question.tags.map((tag) => (
                             <Chip key={tag} label={tag} size="small" />
                         ))}
                     </Stack>
                 )}
 
-                {/* 🚀 Render answer ONLY when expanded */}
                 {expanded && (
-                    <Box sx={{ color: 'text.secondary', lineHeight: 1.8 }}>
-                        <Suspense
-                            fallback={
-                                <Box sx={{ py: 2 }}>
-                                    <CircularProgress size={20} />
-                                </Box>
-                            }
-                        >
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                    code({ inline, className, children, ...props }) {
-                                        const rawCode = String(children).replace(/\n$/, '');
-                                        const match = /language-(\w+)/.exec(className || '');
-                                        const detectedLanguage =
-                                            match?.[1] ||
-                                            detectCodeLanguage(question.category, rawCode);
+                    <Box
+                        sx={{
+                            color: 'text.secondary',
+                            lineHeight: 1.8,
+                            '& p': { mb: 2, mt: 0 },
+                            '& ul, & ol': { pl: 3, mb: 2 },
+                            '& li': { mb: 0.5 },
+                            '& code': {
+                                fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
+                            },
+                            '& pre': {
+                                m: 0,
+                            },
+                            '& table': {
+                                width: '100%',
+                                borderCollapse: 'collapse',
+                                mb: 2,
+                                overflow: 'hidden',
+                                borderRadius: 2,
+                            },
+                            '& th, & td': {
+                                border: '1px solid rgba(255,255,255,0.08)',
+                                padding: '10px 12px',
+                                textAlign: 'left',
+                            },
+                            '& th': {
+                                backgroundColor: 'rgba(255,255,255,0.04)',
+                            },
+                        }}
+                    >
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                code({ inline, className, children, ...props }) {
+                                    const rawCode = String(children).replace(/\n$/, '');
+                                    const match = /language-(\w+)/.exec(className || '');
+                                    const detectedLanguage =
+                                        match?.[1] || detectCodeLanguage(question.category, rawCode);
 
-                                        if (inline) {
-                                            return (
-                                                <Box
-                                                    component="code"
-                                                    sx={{
-                                                        px: 0.7,
-                                                        py: 0.25,
-                                                        borderRadius: 1,
-                                                        backgroundColor:
-                                                            'rgba(255,255,255,0.08)',
-                                                    }}
-                                                >
-                                                    {children}
-                                                </Box>
-                                            );
-                                        }
-
+                                    if (inline) {
                                         return (
-                                            <Box sx={{ mb: 2 }}>
-                                                <SyntaxHighlighter
-                                                    language={detectedLanguage || 'text'}
-                                                    style={oneDark}
-                                                    customStyle={{
-                                                        borderRadius: '10px',
-                                                        padding: '14px',
-                                                        fontSize: '0.9rem',
-                                                    }}
-                                                >
-                                                    {rawCode}
-                                                </SyntaxHighlighter>
+                                            <Box
+                                                component="code"
+                                                sx={{
+                                                    px: 0.75,
+                                                    py: 0.25,
+                                                    borderRadius: 1,
+                                                    backgroundColor: 'rgba(255,255,255,0.08)',
+                                                    fontSize: '0.9em',
+                                                }}
+                                                {...props}
+                                            >
+                                                {children}
                                             </Box>
                                         );
-                                    },
-                                    p: ({ children }) => (
-                                        <Typography sx={{ mb: 2 }}>{children}</Typography>
-                                    ),
-                                }}
-                            >
-                                {markdown}
-                            </ReactMarkdown>
-                        </Suspense>
+                                    }
+
+                                    return (
+                                        <Box sx={{ mb: 2 }}>
+                                            <SyntaxHighlighter
+                                                language={detectedLanguage || 'text'}
+                                                style={oneDark}
+                                                PreTag="div"
+                                                customStyle={{
+                                                    margin: 0,
+                                                    borderRadius: '10px',
+                                                    padding: '16px',
+                                                    background: '#0b1020',
+                                                    border: '1px solid rgba(255,255,255,0.08)',
+                                                    overflowX: 'auto',
+                                                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+                                                }}
+                                                codeTagProps={{
+                                                    style: {
+                                                        fontFamily:
+                                                            '"JetBrains Mono", "Fira Code", "Consolas", monospace',
+                                                        fontSize: '0.95rem',
+                                                    },
+                                                }}
+                                                {...props}
+                                            >
+                                                {rawCode}
+                                            </SyntaxHighlighter>
+                                        </Box>
+                                    );
+                                },
+                                h1: ({ children }) => (
+                                    <Typography variant="h5" sx={{ mt: 2, mb: 1.5 }}>
+                                        {children}
+                                    </Typography>
+                                ),
+                                h2: ({ children }) => (
+                                    <Typography variant="h6" sx={{ mt: 2, mb: 1.5 }}>
+                                        {children}
+                                    </Typography>
+                                ),
+                                h3: ({ children }) => (
+                                    <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                                        {children}
+                                    </Typography>
+                                ),
+                                p: ({ children }) => (
+                                    <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-wrap' }}>
+                                        {children}
+                                    </Typography>
+                                ),
+                                li: ({ children }) => (
+                                    <li>
+                                        <Typography variant="body1" component="span">
+                                            {children}
+                                        </Typography>
+                                    </li>
+                                ),
+                                blockquote: ({ children }) => (
+                                    <Box
+                                        sx={{
+                                            borderLeft: '3px solid',
+                                            borderColor: 'primary.main',
+                                            pl: 2,
+                                            py: 0.8,
+                                            my: 2,
+                                            opacity: 0.95,
+                                            backgroundColor: 'rgba(255,255,255,0.02)',
+                                            borderRadius: 1.5,
+                                        }}
+                                    >
+                                        {children}
+                                    </Box>
+                                ),
+                            }}
+                        >
+                            {markdown}
+                        </ReactMarkdown>
                     </Box>
                 )}
             </AccordionDetails>
