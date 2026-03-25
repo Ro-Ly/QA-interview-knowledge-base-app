@@ -1,28 +1,34 @@
-import fs from 'fs';
-import path from 'path';
+export async function getAllQuestions() {
+    const modules = import.meta.glob('./**/*.json')
 
-// This would be replaced with actual file loading in a real app
-// For demo purposes, we'll use mock data
+    const loaded = await Promise.all(
+        Object.entries(modules).map(async ([filePath, loader]) => {
+            const mod = await loader()
+            const data = mod.default
 
-const getAllQuestions = async () => {
-    // In a real app, you would dynamically import all JSON files
-    // Here's a mock implementation
-    return [
-        {
-            id: 1,
-            title: "How to use Git?",
-            tags: ["git", "version-control"],
-            answer: "```bash\ngit init\n```",
-            category: "Development"
-        },
-        {
-            id: 2,
-            title: "CSS Flexbox basics",
-            tags: ["css", "layout"],
-            answer: "Flexbox is a layout model...",
-            category: "Design"
-        }
-    ];
-};
+            const category = filePath.replace('./', '').split('/')[0]
 
-export { getAllQuestions };
+            if (Array.isArray(data)) {
+                return data.map((item, index) => ({
+                    id: item.id ?? `${filePath}-${index}`,
+                    category: item.category ?? category,
+                    title: item.title ?? 'Untitled',
+                    answer: item.answer ?? '',
+                    tags: item.tags ?? [],
+                }))
+            }
+
+            return [
+                {
+                    id: data.id ?? filePath,
+                    category: data.category ?? category,
+                    title: data.title ?? 'Untitled',
+                    answer: data.answer ?? '',
+                    tags: data.tags ?? [],
+                },
+            ]
+        })
+    )
+
+    return loaded.flat()
+}
